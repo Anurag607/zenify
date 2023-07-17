@@ -338,16 +338,15 @@ class _SideMenuState extends State<SideMenu> {
                                                             UpdateNavigationIndexAction(
                                                                 2),
                                                           );
-                                                          db.updateCurrentSongIndexFromId(
-                                                            songsList[index]
-                                                                ["id"],
+                                                          db.updateCurrentSongIndexFromValue(
+                                                            index,
                                                           );
                                                           StoreProvider.of<
                                                                       SongState>(
                                                                   context)
                                                               .dispatch(
                                                             UpdateCurrentSongIndexAction(
-                                                                db.currentSongIndex),
+                                                                index),
                                                           );
                                                         },
                                                         icon: Icon(

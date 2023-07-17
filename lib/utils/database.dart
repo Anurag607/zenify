@@ -149,15 +149,24 @@ class ZenifyDatabase {
       _zenifyData.put("Permission_status", permissionStatus);
     }
 
+    musicList.clear();
+
+    var title = <dynamic>{};
+
     for (final song in temp) {
-      musicList.add(
-        {
-          "title": song.title,
-          "artist": song.artist,
-          "uri": song.uri,
-          "id": song.id,
-        },
-      );
+      if (title.contains(song.title)) {
+        continue;
+      } else {
+        title.add(song.title);
+        musicList.add(
+          {
+            "title": song.title,
+            "artist": song.artist,
+            "uri": song.uri,
+            "id": song.id,
+          },
+        );
+      }
     }
 
     _zenifyData.put('musicList', musicList);
