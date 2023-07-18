@@ -143,6 +143,7 @@ class _MusicPageState extends State<MusicPage> {
         borderWidth: 0,
         onRefresh: () async {
           db.getTasks();
+          setState(() {});
           await Future.delayed(const Duration(seconds: 2));
           _refreshIndicatorKey.currentState?.show();
         },

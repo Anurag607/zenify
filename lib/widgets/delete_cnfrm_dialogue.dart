@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:zenify/utils/database.dart';
 
-void showConformDeleteDialog(BuildContext context, String date, int index,
+void showConformDeleteDialog(
+    BuildContext context, String date, VoidCallback press, int index,
     {required ValueChanged onValue}) {
   ZenifyDatabase db = ZenifyDatabase();
 
@@ -92,19 +93,7 @@ void showConformDeleteDialog(BuildContext context, String date, int index,
                               date,
                               index,
                             );
-                            final snackBar = SnackBar(
-                              content: Text(
-                                'Deleted Successfully!',
-                                style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                      color: HexColor("#e8e8e8"),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            press();
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(

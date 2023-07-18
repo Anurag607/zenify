@@ -430,7 +430,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                               return ListView(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                clipBehavior: Clip.antiAlias,
                                 children: List.generate(
                                   value.length,
                                   (index) => Container(
@@ -438,12 +438,10 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                                       horizontal: 12.0,
                                     ),
                                     child: Container(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      clipBehavior: Clip.antiAlias,
                                       padding: const EdgeInsets.only(
-                                          top: 0.0,
-                                          bottom: 0.0,
-                                          left: 12.0,
-                                          right: 0.0),
+                                        left: 12.0,
+                                      ),
                                       width: 275,
                                       height: 100,
                                       decoration: BoxDecoration(
@@ -462,24 +460,18 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                                             scrollDirection: Axis.vertical,
                                             physics:
                                                 const BouncingScrollPhysics(),
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
+                                            clipBehavior: Clip.antiAlias,
                                             child: Container(
                                               width: 210,
                                               padding: const EdgeInsets.only(
-                                                  top: 12.0,
-                                                  bottom: 4.0,
-                                                  left: 0.0,
-                                                  right: 0.0),
+                                                top: 12.0,
+                                                bottom: 4.0,
+                                              ),
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
@@ -546,10 +538,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                                           // Actions...
                                           Container(
                                             padding: const EdgeInsets.only(
-                                                top: 12.0,
-                                                bottom: 0.0,
-                                                left: 0.0,
-                                                right: 12.0),
+                                                top: 12.0, right: 12.0),
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
@@ -561,12 +550,6 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                                                   child: Container(
                                                     width: 30,
                                                     height: 30,
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 0.0,
-                                                            bottom: 0.0,
-                                                            left: 0.0,
-                                                            right: 0.0),
                                                     decoration: BoxDecoration(
                                                       color: HexColor("#102844")
                                                           .withOpacity(0.4),
@@ -585,6 +568,10 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                                                               true);
                                                           final snackBar =
                                                               SnackBar(
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        200),
                                                             content: Text(
                                                               'Completed Successfully!',
                                                               style: GoogleFonts
@@ -681,9 +668,42 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                                                             _extractedDay(
                                                                 _focusedDay
                                                                     .value),
+                                                            () {
+                                                              final snackBar =
+                                                                  SnackBar(
+                                                                duration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            200),
+                                                                content: Text(
+                                                                  'Deleted Successfully!',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .lato(
+                                                                    textStyle: TextStyle(
+                                                                        color: HexColor(
+                                                                            "#e8e8e8"),
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                              ScaffoldMessenger
+                                                                      .of(
+                                                                          context)
+                                                                  .showSnackBar(
+                                                                      snackBar);
+                                                            },
                                                             index,
                                                             onValue: (_) {
-                                                              setState(() {});
+                                                              setState(() {
+                                                                _selectedTasks
+                                                                    .value
+                                                                    .removeAt(
+                                                                        index);
+                                                              });
                                                             },
                                                           );
                                                         },

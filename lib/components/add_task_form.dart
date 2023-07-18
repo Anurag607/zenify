@@ -65,6 +65,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
   }
 
   final snackBar = SnackBar(
+    duration: const Duration(milliseconds: 200),
     content: Text(
       'Added Successfully!',
       style: GoogleFonts.lato(

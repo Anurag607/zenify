@@ -69,6 +69,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
   }
 
   final snackBar = SnackBar(
+    duration: const Duration(milliseconds: 200),
     content: Text(
       'Updated Successfully!',
       style: GoogleFonts.lato(

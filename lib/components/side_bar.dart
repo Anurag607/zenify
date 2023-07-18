@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:zenify/pages/completed_task_page.dart';
 import 'package:zenify/utils/database.dart';
 
 import '../../../models/menu.dart';
@@ -122,11 +123,19 @@ class _SideBarState extends State<SideBar> {
                               SideMenu(
                             menu: menu,
                             dispatch: () {
-                              int selectedIndex = 0;
-                              StoreProvider.of<NavigationState>(context)
-                                  .dispatch(
-                                UpdateNavigationIndexAction(selectedIndex),
-                              );
+                              if (menu.title == "Completed Tasks") {
+                                Future.delayed(
+                                        const Duration(milliseconds: 210))
+                                    .then(
+                                  (_) => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CompletedTaskPage(),
+                                    ),
+                                  ),
+                                );
+                              }
                             },
                             closeSidebar: _closeSidebar,
                             press: () {

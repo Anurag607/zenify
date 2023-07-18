@@ -23,59 +23,60 @@ class BackgroundImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: HexColor(shaderMaskColor),
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            ShaderMask(
-              shaderCallback: (rect) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.transparent, HexColor(shaderMaskColor)],
-                  tileMode: TileMode.mirror,
-                ).createShader(
-                  Rect.fromLTRB(0, 0, rect.width, rect.height),
-                );
-              },
-              blendMode: BlendMode.srcOver,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: HexColor(shaderMaskColor),
-                  image: DecorationImage(
-                      image: AssetImage(bgImageURL), fit: BoxFit.cover),
-                ),
+      key: _scaffoldKey,
+      backgroundColor: HexColor(shaderMaskColor),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          ShaderMask(
+            shaderCallback: (rect) {
+              return LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.transparent, HexColor(shaderMaskColor)],
+                tileMode: TileMode.mirror,
+              ).createShader(
+                Rect.fromLTRB(0, 0, rect.width, rect.height),
+              );
+            },
+            blendMode: BlendMode.srcOver,
+            child: Container(
+              decoration: BoxDecoration(
+                color: HexColor(shaderMaskColor),
+                image: DecorationImage(
+                    image: AssetImage(bgImageURL), fit: BoxFit.cover),
               ),
             ),
-            LiquidPullToRefresh(
-              key: _refreshIndicatorKey,
-              springAnimationDurationInMilliseconds: 300,
-              height: 150,
-              color: Colors.transparent,
-              backgroundColor: HexColor(shaderMaskColor),
-              borderWidth: 0,
-              onRefresh: () async {
-                db.getTasks();
-                await Future.delayed(const Duration(seconds: 2));
-                _refreshIndicatorKey.currentState?.show();
-              },
-              showChildOpacityTransition: true,
-              child: SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height,
-                child: SingleChildScrollView(
-                    clipBehavior: Clip.antiAlias,
-                    scrollDirection: Axis.vertical,
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        child,
-                      ],
-                    )),
-              ),
-            )
-          ],
-        ));
+          ),
+          LiquidPullToRefresh(
+            key: _refreshIndicatorKey,
+            springAnimationDurationInMilliseconds: 300,
+            height: 150,
+            color: Colors.transparent,
+            backgroundColor: HexColor(shaderMaskColor),
+            borderWidth: 0,
+            onRefresh: () async {
+              db.getTasks();
+              await Future.delayed(const Duration(seconds: 2));
+              _refreshIndicatorKey.currentState?.show();
+            },
+            showChildOpacityTransition: true,
+            child: SizedBox(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                  clipBehavior: Clip.antiAlias,
+                  scrollDirection: Axis.vertical,
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      child,
+                    ],
+                  )),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

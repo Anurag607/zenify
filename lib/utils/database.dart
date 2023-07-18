@@ -41,6 +41,12 @@ class ZenifyDatabase {
           'isDone': false,
         },
         {
+          'title': "Tidy up the room",
+          'desc': "Tidy up the room and make the bed.",
+          'time': _formatConvertor(now, "07:30"),
+          'isDone': true,
+        },
+        {
           'title': "Breakfast",
           'desc': "Have breakfast in the mess before classes.",
           'time': _formatConvertor(now, "08:00"),
@@ -51,6 +57,20 @@ class ZenifyDatabase {
           'desc': "Complete the daily question on leeetcode.",
           'time': _formatConvertor(now, "09:00"),
           'isDone': false,
+        },
+        {
+          'title': "Data Science IITR Lecture 54",
+          'desc':
+              "Watch lecture 54 (regression models) of Data Science IITR lectures.",
+          'time': _formatConvertor(now, "09:30"),
+          'isDone': true,
+        },
+        {
+          'title': "AI/ML IITR Lecture 28",
+          'desc':
+              "Watch lecture 28 of Fundamental mathematical concepts of AI/ML IITR lecture.",
+          'time': _formatConvertor(now, "10:15"),
+          'isDone': true,
         },
         {
           'title': "Lunch",
@@ -309,6 +329,8 @@ class ZenifyDatabase {
 
   // Function to delete a task item from the task list...
   void deleteTaskItem(String date, int taskIndex) {
+    log("Deleting task...");
+    log("to delete: ${taskIndex.toString()}, $date");
     tasks[date].removeAt(taskIndex);
     saveTasks();
     getTasks();
