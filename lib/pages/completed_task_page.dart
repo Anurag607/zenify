@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -12,6 +10,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:zenify/redux/actions.dart';
 import 'package:zenify/redux/states/navigation_state.dart';
 import 'package:zenify/widgets/delete_cnfrm_dialogue.dart';
+import 'dart:developer';
 
 class CompletedTaskPage extends StatefulWidget {
   const CompletedTaskPage({super.key});
@@ -70,6 +69,7 @@ class _CompletedTaskPageState extends State<CompletedTaskPage>
     }
 
     temp = [...db.tasks[dateString]];
+    log(temp.toString());
     temp.sort((a, b) => a["time"].compareTo(b["time"]) < 0 ? -1 : 1);
     _completedTasks = ValueNotifier<List<dynamic>>(temp);
 

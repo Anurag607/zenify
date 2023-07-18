@@ -29,78 +29,7 @@ class ZenifyDatabase {
   }
 
 // type: Map<DateTime, List<Map<String, dynamic>>>
-  late Map<dynamic, dynamic> tasks;
-
-  ZenifyDatabase() {
-    tasks = {
-      DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()): [
-        {
-          'title': "Get ready for the day",
-          'desc': "Brush your teeth, take a bath, etc.",
-          'time': _formatConvertor(now, "07:00"),
-          'isDone': false,
-        },
-        {
-          'title': "Tidy up the room",
-          'desc': "Tidy up the room and make the bed.",
-          'time': _formatConvertor(now, "07:30"),
-          'isDone': true,
-        },
-        {
-          'title': "Breakfast",
-          'desc': "Have breakfast in the mess before classes.",
-          'time': _formatConvertor(now, "08:00"),
-          'isDone': false,
-        },
-        {
-          'title': "Complete the daily question on leeetcode",
-          'desc': "Complete the daily question on leeetcode.",
-          'time': _formatConvertor(now, "09:00"),
-          'isDone': false,
-        },
-        {
-          'title': "Data Science IITR Lecture 54",
-          'desc':
-              "Watch lecture 54 (regression models) of Data Science IITR lectures.",
-          'time': _formatConvertor(now, "09:30"),
-          'isDone': true,
-        },
-        {
-          'title': "AI/ML IITR Lecture 28",
-          'desc':
-              "Watch lecture 28 of Fundamental mathematical concepts of AI/ML IITR lecture.",
-          'time': _formatConvertor(now, "10:15"),
-          'isDone': true,
-        },
-        {
-          'title': "Lunch",
-          'desc':
-              "Have lunch in the mess before the afternoon classes/lab if any.",
-          'time': _formatConvertor(now, "13:30"),
-          'isDone': false,
-        },
-        {
-          'title': "Project work",
-          'desc':
-              "Start working on any pending project or learn something new.",
-          'time': _formatConvertor(now, "19:30"),
-          'isDone': false,
-        },
-        {
-          'title': "Dinner",
-          'desc': "Have dinner in the mess.",
-          'time': _formatConvertor(now, "20:30"),
-          'isDone': false,
-        },
-        {
-          'title': "Solve questions on leetcode",
-          'desc': "Solve some questions on leetcode before sleeping.",
-          'time': _formatConvertor(now, "21:30"),
-          'isDone': false,
-        },
-      ]
-    };
-  }
+  Map<dynamic, dynamic> tasks = {};
 
   final _zenifyData = Hive.box('zenifyData');
 
@@ -141,6 +70,80 @@ class ZenifyDatabase {
   void getUserDetails() {
     log('Getting user details...');
     userDetails = _zenifyData.get('userDetails') ?? userDetails;
+  }
+
+  void setInitialTasks() {
+    log('Setting initial tasks...');
+    var temp = tasks = {
+      DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()): [
+        {
+          'title': "Get ready for the day",
+          'desc': "Brush your teeth, take a bath, etc.",
+          'time': _formatConvertor(now, "07:00"),
+          'isDone': false,
+        },
+        {
+          'title': "Tidy up the room",
+          'desc': "Tidy up the room and make the bed.",
+          'time': _formatConvertor(now, "07:30"),
+          'isDone': false,
+        },
+        {
+          'title': "Breakfast",
+          'desc': "Have breakfast in the mess before classes.",
+          'time': _formatConvertor(now, "08:00"),
+          'isDone': false,
+        },
+        {
+          'title': "Complete the daily question on leeetcode",
+          'desc': "Complete the daily question on leeetcode.",
+          'time': _formatConvertor(now, "09:00"),
+          'isDone': false,
+        },
+        {
+          'title': "Data Science IITR Lecture 54",
+          'desc':
+              "Watch lecture 54 (regression models) of Data Science IITR lectures.",
+          'time': _formatConvertor(now, "09:30"),
+          'isDone': false,
+        },
+        {
+          'title': "AI/ML IITR Lecture 28",
+          'desc':
+              "Watch lecture 28 of Fundamental mathematical concepts of AI/ML IITR lecture.",
+          'time': _formatConvertor(now, "10:15"),
+          'isDone': false,
+        },
+        {
+          'title': "Lunch",
+          'desc':
+              "Have lunch in the mess before the afternoon classes/lab if any.",
+          'time': _formatConvertor(now, "13:30"),
+          'isDone': false,
+        },
+        {
+          'title': "Project work",
+          'desc':
+              "Start working on any pending project or learn something new.",
+          'time': _formatConvertor(now, "19:30"),
+          'isDone': false,
+        },
+        {
+          'title': "Dinner",
+          'desc': "Have dinner in the mess.",
+          'time': _formatConvertor(now, "20:30"),
+          'isDone': false,
+        },
+        {
+          'title': "Solve questions on leetcode",
+          'desc': "Solve some questions on leetcode before sleeping.",
+          'time': _formatConvertor(now, "21:30"),
+          'isDone': false,
+        },
+      ]
+    };
+    _zenifyData.put('tasks', temp);
+    _zenifyData.get('tasks');
   }
 
   // Function to update the music list...
@@ -296,26 +299,12 @@ class ZenifyDatabase {
   void getTasks() {
     log("Getting tasks...");
     tasks = _zenifyData.get('tasks') ?? tasks;
-  }
-
-  // Function to delete a task list from the collection...
-  void deleteTask(int index) {
-    log("Deleting task...");
-    tasks.remove(index);
-    saveTasks();
-    getTasks();
+    log(tasks.toString());
   }
 
   // Function to add a new task list to the collection...
   void addTask(String dateTime, List<Map<dynamic, dynamic>> task) {
     tasks[dateTime] = task;
-    saveTasks();
-    getTasks();
-  }
-
-  // Function to update a certain task list in the collection...
-  void updateTask(String date, List<Map<dynamic, dynamic>> task) {
-    tasks[date] = task;
     saveTasks();
     getTasks();
   }
@@ -330,8 +319,13 @@ class ZenifyDatabase {
   // Function to delete a task item from the task list...
   void deleteTaskItem(String date, int taskIndex) {
     log("Deleting task...");
-    log("to delete: ${taskIndex.toString()}, $date");
-    tasks[date].removeAt(taskIndex);
+    getTasks();
+
+    if (tasks[date].length > taskIndex) {
+      log("to delete: $taskIndex, $date, ${tasks[date].length}");
+      log("to delete: ${tasks[date][taskIndex].toString()}, $date");
+      tasks[date].removeAt(taskIndex);
+    }
     saveTasks();
     getTasks();
   }
@@ -348,5 +342,6 @@ class ZenifyDatabase {
       String date, int taskIndex, Map<dynamic, dynamic> taskItem) {
     tasks[date][taskIndex] = taskItem;
     saveTasks();
+    getTasks();
   }
 }

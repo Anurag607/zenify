@@ -669,41 +669,21 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                                                                 _focusedDay
                                                                     .value),
                                                             () {
-                                                              final snackBar =
-                                                                  SnackBar(
-                                                                duration:
-                                                                    const Duration(
-                                                                        milliseconds:
-                                                                            200),
-                                                                content: Text(
-                                                                  'Deleted Successfully!',
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .lato(
-                                                                    textStyle: TextStyle(
-                                                                        color: HexColor(
-                                                                            "#e8e8e8"),
-                                                                        fontSize:
-                                                                            15,
-                                                                        fontWeight:
-                                                                            FontWeight.w400),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                              ScaffoldMessenger
-                                                                      .of(
-                                                                          context)
-                                                                  .showSnackBar(
-                                                                      snackBar);
+                                                              if (_selectedTasks
+                                                                      .value
+                                                                      .length >
+                                                                  index) {
+                                                                setState(() {
+                                                                  _selectedTasks
+                                                                      .value
+                                                                      .removeAt(
+                                                                          index);
+                                                                });
+                                                              }
                                                             },
                                                             index,
                                                             onValue: (_) {
-                                                              setState(() {
-                                                                _selectedTasks
-                                                                    .value
-                                                                    .removeAt(
-                                                                        index);
-                                                              });
+                                                              // setState(() {});
                                                             },
                                                           );
                                                         },

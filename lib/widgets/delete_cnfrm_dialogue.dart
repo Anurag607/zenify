@@ -89,11 +89,25 @@ void showConformDeleteDialog(
                         ),
                         ElevatedButton(
                           onPressed: () {
+                            // press();
                             db.deleteTaskItem(
                               date,
                               index,
                             );
-                            press();
+                            final snackBar = SnackBar(
+                              duration: const Duration(milliseconds: 200),
+                              content: Text(
+                                'Deleted Successfully!',
+                                style: GoogleFonts.lato(
+                                  textStyle: TextStyle(
+                                      color: HexColor("#e8e8e8"),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(

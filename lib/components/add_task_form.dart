@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -173,7 +172,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
                               onChange: onTimeChanged,
                               minuteInterval: TimePickerInterval.FIVE,
                               onChangeDateTime: (DateTime dateTime) {
-                                log(dateTime.toString());
                                 setState(() {
                                   taskData["time"] = dateTime;
                                 });

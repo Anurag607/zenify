@@ -55,7 +55,7 @@ class TaskCardContent extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.only(top: 4.5, left: 8),
+                        padding: const EdgeInsets.only(top: 4.5, left: 0),
                         child: Text(
                           DateFormat.jm().format(time),
                           style: GoogleFonts.lato(
@@ -118,18 +118,26 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (_zenifyData.get("tasks") == null) {
-      db.getTasks();
+      db.saveTasks();
     } else {
       db.getTasks();
     }
 
-    todayTasks = [...db.tasks[dateString]];
-    todayTasks.sort((a, b) => a["time"].compareTo(b["time"]) < 0 ? -1 : 1);
+    if (db.tasks[dateString] != null) {
+      for (int i = 0; i < db.tasks[dateString].length; i++) {
+        if (db.tasks[dateString][i]["isDone"] != null &&
+            db.tasks[dateString][i]["isDone"] == false) {
+          todayTasks.add(db.tasks[dateString][i]);
+        }
+      }
+      todayTasks.sort((a, b) => a["time"].compareTo(b["time"]) < 0 ? -1 : 1);
+    }
 
-    for (var index = 0; index < db.tasks[dateString].length; index++) {
-      if (db.tasks[dateString][index]["time"].compareTo(now) > 0) {
-        upcomingTask = db.tasks[dateString][index];
-        upcomingTaskIndex = index + 1;
+    for (var index = 0; index < todayTasks.length; index++) {
+      if (todayTasks[index]["time"] != null &&
+          todayTasks[index]["time"].compareTo(now) > 0) {
+        upcomingTask = todayTasks[index];
+        upcomingTaskIndex = index;
         noMoreTasks = false;
         break;
       }
