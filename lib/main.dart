@@ -1,10 +1,15 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:redux/redux.dart';
+import 'package:zenify/fcm_api.dart';
 import 'package:zenify/pages/main_page.dart';
+import 'package:zenify/pages/notification_page.dart';
 import 'package:zenify/pages/onboarding_screen.dart';
 import 'package:zenify/redux/reducer.dart';
 import 'package:zenify/redux/states/navigation_state.dart';
@@ -13,11 +18,28 @@ import 'package:zenify/redux/states/song_state.dart';
 import 'package:zenify/utils/database.dart';
 import 'package:zenify/utils/songModelAdapter.dart';
 import 'models/menu.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(SongTypeAdapter());
   await Hive.openBox('zenifyData');
+  await dotenv.load(fileName: ".env");
+  HttpOverrides.global = MyHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FCMApi().initNotification();
   runApp(const MyApp());
 }
 
@@ -72,42 +94,44 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return StoreProvider(
-        store: _bottomnavbarStore,
+      store: _bottomnavbarStore,
+      child: StoreProvider(
+        store: _currentSongStore,
         child: StoreProvider(
-          store: _currentSongStore,
-          child: StoreProvider(
-            store: _sidebarStore,
-            child: MaterialApp(
-                title: 'Zenify',
-                debugShowCheckedModeBanner: false,
-                color: HexColor("#102844"),
-                theme: ThemeData(
-                  colorScheme: ColorScheme.light(
-                    primary: HexColor("#102844"),
-                    secondary: HexColor("#102844"),
-                    error: const Color(0xFFE45C5C),
-                  ),
-                  textTheme: GoogleFonts.quicksandTextTheme(
-                    Theme.of(context).textTheme,
-                  ),
-                  scaffoldBackgroundColor: HexColor("#102844"),
-                  useMaterial3: true,
-                  inputDecorationTheme: const InputDecorationTheme(
-                    filled: true,
-                    fillColor: Colors.white,
-                    errorStyle: TextStyle(height: 0),
-                    border: defaultInputBorder,
-                    enabledBorder: defaultInputBorder,
-                    focusedBorder: defaultInputBorder,
-                    errorBorder: defaultInputBorder,
-                  ),
+          store: _sidebarStore,
+          child: MaterialApp(
+              title: 'Zenify',
+              debugShowCheckedModeBanner: false,
+              color: HexColor("#102844"),
+              theme: ThemeData(
+                colorScheme: ColorScheme.light(
+                  primary: HexColor("#102844"),
+                  secondary: HexColor("#102844"),
+                  error: const Color(0xFFE45C5C),
                 ),
-                initialRoute: db.userDetails["name"]!.isEmpty ? '/' : '/home',
-                routes: {
-                  '/': (context) => const OnbodingScreen(),
-                  '/home': (context) => const MainPage(),
-                }),
-          ),
-        ));
+                textTheme: GoogleFonts.quicksandTextTheme(
+                  Theme.of(context).textTheme,
+                ),
+                scaffoldBackgroundColor: HexColor("#102844"),
+                useMaterial3: true,
+                inputDecorationTheme: const InputDecorationTheme(
+                  filled: true,
+                  fillColor: Colors.white,
+                  errorStyle: TextStyle(height: 0),
+                  border: defaultInputBorder,
+                  enabledBorder: defaultInputBorder,
+                  focusedBorder: defaultInputBorder,
+                  errorBorder: defaultInputBorder,
+                ),
+              ),
+              initialRoute: db.userDetails["name"]!.isEmpty ? '/' : '/home',
+              routes: {
+                '/': (context) => const OnbodingScreen(),
+                '/home': (context) => const MainPage(),
+                '/notification': (context) => const NotificationPage(),
+              }),
+        ),
+      ),
+    );
   }
 }
