@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "45888662658",
-    "project_id": "zenify-2806c",
-    "storage_bucket": "zenify-2806c.appspot.com"
+    "project_number": "662595738073",
+    "project_id": "mobilicis-6d085",
+    "storage_bucket": "mobilicis-6d085.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:45888662658:android:8623c2f6996ede1dee989b",
+        "mobilesdk_app_id": "1:662595738073:android:367f3e603fd2ba2ca421c8",
         "android_client_info": {
           "package_name": "com.example.zenify"
         }
       },
       "oauth_client": [
         {
-          "client_id": "45888662658-p82j6ddtmpe0fic5if34korqeu9ivjeq.apps.googleusercontent.com",
+          "client_id": "662595738073-eo16rtbp8tsuo516e1pfrhb89t1v1s8a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.zenify",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "45888662658-l7l84644grhhu2b9c8k1lsnbo52295jr.apps.googleusercontent.com",
+          "client_id": "662595738073-bsdnu7d67ilufe05e90ece36emc9dh8e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDy0coBuJUm-8A9K0gVY67yV8x5nPMfBGQ"
+          "current_key": "AIzaSyAPfGOuB1DLoajuhnF65l-vdCZxiwRDxgo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "45888662658-l7l84644grhhu2b9c8k1lsnbo52295jr.apps.googleusercontent.com",
+              "client_id": "662595738073-bsdnu7d67ilufe05e90ece36emc9dh8e.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -12,9 +12,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:zenify/main.dart';
 import 'package:zenify/pages/notification_page.dart';
 
-const fcmToken =
-    "fdvM5VXbSxy7smf1tFiRFQ:APA91bHu6tQr1g7RlkyInH2W8efDmtzdfMLojAQSu9xyPMopcQsZwD9oM_yLGU3PyBuXZSLDj6FaA6eZ9JsKbAEqX4wyafbHnFqM2pkZFOOQWIXu25NZLv7kDnPVuJUqKOcIZQ43VmMV";
-
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   log('Handling a message ${message.messageId}');
   log('Title: ${message.notification!.title}');
@@ -104,9 +101,9 @@ class FCMApi {
       "registration_ids": userToken,
       "collapse_key": "type_a",
       "notification": {
-        "title": 'Hello OruPhones,',
+        "title": 'Hello from Zenify,',
         "body":
-            'This is the assignment as per the given requirements. Take a look!',
+            'This is a scheduler app i made which also comes with a music player. Take a look!',
         "image": "https://cdn-icons-png.flaticon.com/128/9437/9437514.png",
         "name": "Demo FCM push notification",
       }

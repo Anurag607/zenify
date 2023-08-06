@@ -68,17 +68,27 @@ class _CompletedTaskPageState extends State<CompletedTaskPage>
       db.getTasks();
     }
 
-    temp = [...db.tasks[dateString]];
-    log(temp.toString());
-    temp.sort((a, b) => a["time"].compareTo(b["time"]) < 0 ? -1 : 1);
-    _completedTasks = ValueNotifier<List<dynamic>>(temp);
+    var tasks = db.tasks.entries;
 
-    temp = [];
+    for (var task in tasks) {
+      log(task.key.toString());
+    }
 
-    for (int i = 0; i < db.tasks[dateString].length; i++) {
-      if (db.tasks[dateString][i]["isDone"] == true) {
-        temp.add(db.tasks[dateString][i]);
+    if (db.tasks[dateString] == null) {
+      _completedTasks = ValueNotifier<List<dynamic>>([]);
+    } else {
+      for (var task in tasks) {
+        var idx = task.key.toString();
+        log(db.tasks[idx].toString());
+        if (db.tasks[idx] == null) continue;
+        for (int i = 0; i < db.tasks[idx].length; i++) {
+          if (db.tasks[idx][i] != null && db.tasks[idx][i]["isDone"] == true) {
+            temp.add(db.tasks[idx][i]);
+          }
+        }
       }
+      temp.sort((a, b) => a["time"].compareTo(b["time"]) < 0 ? -1 : 1);
+      _completedTasks = ValueNotifier<List<dynamic>>(temp);
     }
 
     super.initState();
@@ -352,7 +362,7 @@ class _CompletedTaskPageState extends State<CompletedTaskPage>
                                               children: [
                                                 // Texts...
                                                 Container(
-                                                  width: 210,
+                                                  width: 260,
                                                   padding:
                                                       const EdgeInsets.only(
                                                           top: 12.0,
@@ -366,58 +376,91 @@ class _CompletedTaskPageState extends State<CompletedTaskPage>
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            color: Colors
-                                                                .transparent,
-                                                            width: 140,
-                                                            child: Text(
-                                                              '${value[index]["title"]}',
-                                                              style: GoogleFonts
-                                                                  .quicksand(
-                                                                textStyle: TextStyle(
-                                                                    color: HexColor(
-                                                                        "#e8e8e8"),
-                                                                    fontSize:
-                                                                        22.5,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                      Container(
+                                                        color:
+                                                            Colors.transparent,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Container(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              width: 175,
+                                                              child: Text(
+                                                                '${value[index]["title"]}',
+                                                                style: GoogleFonts
+                                                                    .quicksand(
+                                                                  textStyle: TextStyle(
+                                                                      color: HexColor(
+                                                                          "#e8e8e8"),
+                                                                      fontSize:
+                                                                          22.5,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    top: 4.5,
-                                                                    left: 8),
-                                                            child: Text(
-                                                              DateFormat.jm()
-                                                                  .format(value[
-                                                                          index]
-                                                                      ["time"]),
-                                                              style: GoogleFonts
-                                                                  .lato(
-                                                                textStyle: const TextStyle(
-                                                                    color: Colors
-                                                                        .amberAccent,
-                                                                    fontSize:
-                                                                        15,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                            Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      top: 4.5,
+                                                                      left: 0),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .end,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .end,
+                                                                children: [
+                                                                  Text(
+                                                                    DateFormat
+                                                                            .yMMMd()
+                                                                        .format(value[index]
+                                                                            [
+                                                                            "time"]),
+                                                                    style:
+                                                                        GoogleFonts
+                                                                            .lato(
+                                                                      textStyle: const TextStyle(
+                                                                          color: Colors
+                                                                              .amberAccent,
+                                                                          fontSize:
+                                                                              15,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    DateFormat
+                                                                            .jm()
+                                                                        .format(value[index]
+                                                                            [
+                                                                            "time"]),
+                                                                    style:
+                                                                        GoogleFonts
+                                                                            .lato(
+                                                                      textStyle: const TextStyle(
+                                                                          color: Colors
+                                                                              .amberAccent,
+                                                                          fontSize:
+                                                                              15,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
                                                       const SizedBox(
                                                           height: 8.0),

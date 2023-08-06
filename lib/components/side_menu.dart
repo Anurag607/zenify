@@ -396,7 +396,7 @@ class _SideMenuState extends State<SideMenu> {
   Widget fallbackWidget(
       String message, String action, VoidCallback actionCallback) {
     return Container(
-      width: 275,
+      width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.red[400],
