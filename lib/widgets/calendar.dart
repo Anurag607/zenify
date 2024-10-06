@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
@@ -497,7 +499,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                                                       Container(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 top: 4.5,
                                                                 left: 8),
                                                         child: Text(
@@ -733,14 +735,14 @@ class _CalendarHeader extends StatelessWidget {
   final bool clearButtonVisible;
 
   const _CalendarHeader({
-    Key? key,
+    super.key,
     required this.focusedDay,
     required this.onLeftArrowTap,
     required this.onRightArrowTap,
     required this.onTodayButtonTap,
     required this.onClearButtonTap,
     required this.clearButtonVisible,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

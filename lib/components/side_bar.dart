@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -103,7 +105,7 @@ class _SideBarState extends State<SideBar> {
                         },
                       );
                     },
-                  ).toList(),
+                  ),
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 24, top: 40, bottom: 16),
@@ -115,41 +117,36 @@ class _SideBarState extends State<SideBar> {
                           .copyWith(color: Colors.white70),
                     ),
                   ),
-                  ...sidebarMenus2
-                      .map(
-                        (menu) => StoreConnector<NavigationState, int>(
-                          converter: (store) => store.state.tabIndex,
-                          builder: (context, int stateNavigationIndex) =>
-                              SideMenu(
-                            menu: menu,
-                            dispatch: () {
-                              if (menu.title == "Completed Tasks") {
-                                Future.delayed(
-                                        const Duration(milliseconds: 210))
-                                    .then(
-                                  (_) => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CompletedTaskPage(),
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                            closeSidebar: _closeSidebar,
-                            press: () {
-                              RiveUtils.chnageSMIBoolState(menu.rive.status!);
-                            },
-                            riveOnInit: (artboard) {
-                              menu.rive.status = RiveUtils.getRiveInput(
-                                  artboard,
-                                  stateMachineName: menu.rive.stateMachineName);
-                            },
-                          ),
-                        ),
-                      )
-                      .toList(),
+                  ...sidebarMenus2.map(
+                    (menu) => StoreConnector<NavigationState, int>(
+                      converter: (store) => store.state.tabIndex,
+                      builder: (context, int stateNavigationIndex) => SideMenu(
+                        menu: menu,
+                        dispatch: () {
+                          if (menu.title == "Completed Tasks") {
+                            Future.delayed(const Duration(milliseconds: 210))
+                                .then(
+                              (_) => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CompletedTaskPage(),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        closeSidebar: _closeSidebar,
+                        press: () {
+                          RiveUtils.chnageSMIBoolState(menu.rive.status!);
+                        },
+                        riveOnInit: (artboard) {
+                          menu.rive.status = RiveUtils.getRiveInput(artboard,
+                              stateMachineName: menu.rive.stateMachineName);
+                        },
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 75),
                 ],
               ),

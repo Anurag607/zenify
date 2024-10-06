@@ -1,15 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:rive/rive.dart';
+import 'package:rive/rive.dart' as rive; // Alias added for the Rive package
 import 'package:zenify/utils/database.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<SignInForm> createState() => _SignInFormState();
@@ -21,28 +23,28 @@ class _SignInFormState extends State<SignInForm> {
   final GlobalKey<FormState> _signInFormKey = GlobalKey<FormState>();
   bool isShowLoading = false;
   bool isShowConfetti = false;
-  late SMITrigger error;
-  late SMITrigger success;
-  late SMITrigger reset;
+  late rive.SMITrigger error;
+  late rive.SMITrigger success;
+  late rive.SMITrigger reset;
+  late rive.SMITrigger confetti;
 
-  late SMITrigger confetti;
-
-  void _onCheckRiveInit(Artboard artboard) {
-    StateMachineController? controller =
-        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+  void _onCheckRiveInit(rive.Artboard artboard) {
+    rive.StateMachineController? controller =
+        rive.StateMachineController.fromArtboard(artboard, 'State Machine 1');
 
     artboard.addController(controller!);
-    error = controller.findInput<bool>('Error') as SMITrigger;
-    success = controller.findInput<bool>('Check') as SMITrigger;
-    reset = controller.findInput<bool>('Reset') as SMITrigger;
+    error = controller.findInput<bool>('Error') as rive.SMITrigger;
+    success = controller.findInput<bool>('Check') as rive.SMITrigger;
+    reset = controller.findInput<bool>('Reset') as rive.SMITrigger;
   }
 
-  void _onConfettiRiveInit(Artboard artboard) {
-    StateMachineController? controller =
-        StateMachineController.fromArtboard(artboard, "State Machine 1");
+  void _onConfettiRiveInit(rive.Artboard artboard) {
+    rive.StateMachineController? controller =
+        rive.StateMachineController.fromArtboard(artboard, "State Machine 1");
     artboard.addController(controller!);
 
-    confetti = controller.findInput<bool>("Trigger explosion") as SMITrigger;
+    confetti =
+        controller.findInput<bool>("Trigger explosion") as rive.SMITrigger;
   }
 
   void signIn(BuildContext context) {
@@ -117,10 +119,12 @@ class _SignInFormState extends State<SignInForm> {
                   decoration: InputDecoration(
                     hintText: "Enter your name",
                     prefixIcon: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: SizedBox(
-                            width: 16,
-                            child: Image.asset("assets/icons/user.png"))),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: SizedBox(
+                        width: 16,
+                        child: Image.asset("assets/icons/user.png"),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -149,8 +153,9 @@ class _SignInFormState extends State<SignInForm> {
                     prefixIcon: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: SizedBox(
-                          width: 16,
-                          child: Image.asset("assets/icons/security.png")),
+                        width: 16,
+                        child: Image.asset("assets/icons/security.png"),
+                      ),
                     ),
                   ),
                 ),
@@ -184,9 +189,10 @@ class _SignInFormState extends State<SignInForm> {
                   label: const Text(
                     "Sign In",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -206,12 +212,12 @@ class _SignInFormState extends State<SignInForm> {
                       ),
                     ),
                     CustomPositioned(
-                      child: RiveAnimation.asset(
+                      child: rive.RiveAnimation.asset(
                         'assets/RiveAssets/check.riv',
                         onInit: _onCheckRiveInit,
                         fit: BoxFit.cover,
                       ),
-                    )
+                    ),
                   ],
                 ),
               )
@@ -219,7 +225,7 @@ class _SignInFormState extends State<SignInForm> {
         isShowConfetti
             ? CustomPositioned(
                 scale: 6,
-                child: RiveAnimation.asset(
+                child: rive.RiveAnimation.asset(
                   "assets/RiveAssets/confetti.riv",
                   onInit: _onConfettiRiveInit,
                   fit: BoxFit.cover,

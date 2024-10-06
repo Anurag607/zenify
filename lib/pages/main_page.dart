@@ -86,23 +86,19 @@ class _MainPageState extends State<MainPage>
         key: _scaffoldKey,
         body: swipe_detector.SwipeTo(
           iconColor: Colors.transparent,
-          onRightSwipe: () {
+          onRightSwipe: (details) {
             isMenuOpenInput.value = true;
             _animationController.forward();
-            setState(
-              () {
-                isSideBarOpen = true;
-              },
-            );
+            setState(() {
+              isSideBarOpen = true;
+            });
           },
-          onLeftSwipe: () {
+          onLeftSwipe: (details) {
             isMenuOpenInput.value = false;
             _animationController.reverse();
-            setState(
-              () {
-                isSideBarOpen = false;
-              },
-            );
+            setState(() {
+              isSideBarOpen = false;
+            });
           },
           child: Container(
             width: double.infinity,

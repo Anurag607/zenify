@@ -5,9 +5,9 @@ import 'package:hexcolor/hexcolor.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
-    Key? key,
+    super.key,
     required this.name,
-  }) : super(key: key);
+  });
 
   final String name;
 

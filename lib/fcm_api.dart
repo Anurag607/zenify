@@ -46,14 +46,16 @@ class FCMApi {
   final _localNotification = FlutterLocalNotificationsPlugin();
 
   Future<void> initLocalNotification() async {
-    const ios = IOSInitializationSettings();
+    const ios = DarwinInitializationSettings();
     const android = AndroidInitializationSettings('@drawable/ic_launcher');
     const settings = InitializationSettings(android: android, iOS: ios);
     await _localNotification.initialize(settings,
-        onSelectNotification: (payload) {
-      log("onDidReceiveBackgroundNotificationResponse: $payload");
-      final message = RemoteMessage.fromMap(jsonDecode(payload!));
-      handleMessage(message);
+        onDidReceiveNotificationResponse: (NotificationResponse response) {
+      log("onDidReceiveBackgroundNotificationResponse: ${response.payload}");
+      if (response.payload != null) {
+        final message = RemoteMessage.fromMap(jsonDecode(response.payload!));
+        handleMessage(message);
+      }
     });
 
     final platform = _localNotification.resolvePlatformSpecificImplementation<

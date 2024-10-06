@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -214,12 +216,11 @@ class _MusicPageState extends State<MusicPage> {
 
 class _MusicPlayer extends StatelessWidget {
   const _MusicPlayer({
-    Key? key,
+    super.key,
     required this.song,
     required Stream<SeekBarData> seekBarDataStream,
     required this.audioPlayer,
-  })  : _seekBarDataStream = seekBarDataStream,
-        super(key: key);
+  }) : _seekBarDataStream = seekBarDataStream;
 
   final dynamic song;
   final Stream<SeekBarData> _seekBarDataStream;

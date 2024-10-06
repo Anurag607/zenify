@@ -9,9 +9,9 @@ class PlayerButtons extends StatelessWidget {
   final AudioPlayer audioPlayer;
 
   PlayerButtons({
-    Key? key,
+    super.key,
     required this.audioPlayer,
-  }) : super(key: key);
+  });
 
   final ZenifyDatabase db = ZenifyDatabase();
 

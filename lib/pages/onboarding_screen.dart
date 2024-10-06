@@ -1,9 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:rive/rive.dart';
+import 'package:rive/rive.dart' as rive;
 
 import 'package:zenify/components/animated_btn.dart';
 import 'package:zenify/widgets/sign_in_dialog.dart';
@@ -16,13 +18,13 @@ class OnbodingScreen extends StatefulWidget {
 }
 
 class _OnbodingScreenState extends State<OnbodingScreen> {
-  late RiveAnimationController _btnAnimationController;
+  late rive.RiveAnimationController _btnAnimationController;
 
   bool isShowSignInDialog = false;
 
   @override
   void initState() {
-    _btnAnimationController = OneShotAnimation(
+    _btnAnimationController = rive.OneShotAnimation(
       "active",
       autoplay: false,
     );
@@ -52,7 +54,7 @@ class _OnbodingScreenState extends State<OnbodingScreen> {
               child: const SizedBox(),
             ),
           ),
-          const RiveAnimation.asset(
+          const rive.RiveAnimation.asset(
             "assets/RiveAssets/shapes.riv",
           ),
           Positioned.fill(
