@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'package:hive/hive.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:on_audio_query/on_audio_query.dart';
+// import 'package:on_audio_query/on_audio_query.dart';
 
 class ZenifyDatabase {
   Map<dynamic, dynamic> userDetails = {
@@ -14,7 +14,7 @@ class ZenifyDatabase {
   int currentSongIndex = 0;
   bool hasPermission = false;
 
-  final OnAudioQuery _audioQuery = OnAudioQuery();
+  // final OnAudioQuery _audioQuery = OnAudioQuery();
   List<dynamic> musicList = [];
 
   final dateFormat = DateFormat('yyyy-MM-dd hh:mm');
@@ -41,21 +41,21 @@ class ZenifyDatabase {
 
   // Function to get permission...
   Future<bool> requestStoragePermission() async {
-    if (!kIsWeb) {
-      log('Requesting storage permission...');
-      bool permissionStatus = await _audioQuery.permissionsStatus();
-      if (!permissionStatus) {
-        await _audioQuery.permissionsRequest();
-      }
+    // if (!kIsWeb) {
+    //   log('Requesting storage permission...');
+    //   bool permissionStatus = await _audioQuery.permissionsStatus();
+    //   if (!permissionStatus) {
+    //     await _audioQuery.permissionsRequest();
+    //   }
 
-      log(permissionStatus
-          ? "requesting: Permission granted"
-          : "requesting: Permission denied");
+    //   log(permissionStatus
+    //       ? "requesting: Permission granted"
+    //       : "requesting: Permission denied");
 
-      if (permissionStatus == true) {
-        return permissionStatus;
-      }
-    }
+    //   if (permissionStatus == true) {
+    //     return permissionStatus;
+    //   }
+    // }
 
     return false;
   }
@@ -163,13 +163,13 @@ class ZenifyDatabase {
     var temp = [];
 
     if (permissionStatus == true) {
-      temp = await _audioQuery.querySongs(
-        sortType: null,
-        orderType: OrderType.ASC_OR_SMALLER,
-        uriType: UriType.EXTERNAL,
-        ignoreCase: true,
-      );
-      _zenifyData.put("Permission_status", permissionStatus);
+      // temp = await _audioQuery.querySongs(
+      //   sortType: null,
+      //   orderType: OrderType.ASC_OR_SMALLER,
+      //   uriType: UriType.EXTERNAL,
+      //   ignoreCase: true,
+      // );
+      // _zenifyData.put("Permission_status", permissionStatus);
     }
 
     musicList.clear();

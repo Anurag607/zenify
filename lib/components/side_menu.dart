@@ -9,7 +9,7 @@ import 'package:zenify/redux/states/navigation_state.dart';
 import 'package:zenify/redux/states/song_state.dart';
 import 'package:zenify/utils/database.dart';
 import '../../../models/menu.dart';
-import 'package:on_audio_query/on_audio_query.dart';
+// import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:zenify/redux/actions.dart';
 import 'package:zenify/redux/states/sidebar_state.dart';
@@ -118,7 +118,7 @@ class _SideMenuState extends State<SideMenu> {
 
   List<dynamic> songsList = [];
 
-  final OnAudioQuery _audioQuery = OnAudioQuery();
+  // final OnAudioQuery _audioQuery = OnAudioQuery();
 
   final ScrollController _scrollController = ScrollController();
 
@@ -144,21 +144,21 @@ class _SideMenuState extends State<SideMenu> {
       _isLoading = true;
     });
 
-    _audioQuery.querySongs().then((value) {
-      setState(() {
-        _isLoading = false;
-      });
-      db.saveMusicList(value);
-      db.loadMusicList();
-      if (db.musicList.isNotEmpty) {
-        setState(() {
-          for (int i = 0; i < _maxSongsTobeFetched; i++) {
-            songsList.add(db.musicList[i]);
-          }
-          // log("side_menu: ${db.musicList.length}, ${songsList.toString()}");
-        });
-      }
-    });
+    // _audioQuery.querySongs().then((value) {
+    //   setState(() {
+    //     _isLoading = false;
+    //   });
+    //   db.saveMusicList(value);
+    //   db.loadMusicList();
+    //   if (db.musicList.isNotEmpty) {
+    //     setState(() {
+    //       for (int i = 0; i < _maxSongsTobeFetched; i++) {
+    //         songsList.add(db.musicList[i]);
+    //       }
+    //       log("side_menu: ${db.musicList.length}, ${songsList.toString()}");
+    //     });
+    //   }
+    // });
   }
 
   @override
@@ -358,13 +358,13 @@ class _SideMenuState extends State<SideMenu> {
                                                                   0.975),
                                                         ),
                                                       ),
-                                                      leading:
-                                                          QueryArtworkWidget(
-                                                        controller: _audioQuery,
-                                                        id: songsList[index]
-                                                            ["id"],
-                                                        type: ArtworkType.AUDIO,
-                                                      ),
+                                                      // leading:
+                                                      //     QueryArtworkWidget(
+                                                      //   controller: _audioQuery,
+                                                      //   id: songsList[index]
+                                                      //       ["id"],
+                                                      //   type: ArtworkType.AUDIO,
+                                                      // ),
                                                     ),
                                                     const Divider(
                                                       color: Colors.white24,
